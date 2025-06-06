@@ -1,5 +1,6 @@
 import { Sequelize } from 'sequelize';
 import config from '../config/config.js';
+import mysql2 from 'mysql2';
 
 const env = process.env.NODE_ENV || 'development';
 const dbConfig = config[env];
@@ -10,12 +11,20 @@ const sequelize = new Sequelize(
   dbConfig.password,
   {
     host: dbConfig.host,
-    dialect: dbConfig.dialect,
+    dialect: dbConfig.dialect || 'mysql',
+    dialectModule: mysql2,
     logging: dbConfig.logging,
     pool: dbConfig.pool
   }
 );
-
+// Verificación de conexión
+try {
+  await sequelize.authenticate();
+  console.log('✅ Conexión a MySQL establecida');
+} catch (error) {
+  console.error('❌ Error de conexión a MySQL:', error);
+  process.exit(1);
+}
 // Importación directa (más confiable que dinámica)
 import userModel from './Users.js';
 import taskModel from './Task.js';
