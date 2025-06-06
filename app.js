@@ -2,9 +2,9 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import helmet from 'helmet';
-import authRoutes from './routes/authRoutes.js';
-import taskRoutes from './routes/taskRoutes.js';
-import errorMiddleware from './middlewares/errorMiddleware.js';
+import authRoutes from './src/routes/authRoutes.js';
+import taskRoutes from './src/routes/taskRoutes.js';
+import errorMiddleware from './src/middlewares/errorMiddleware.js';
 import bodyParser from 'body-parser';
 
 const app = express();
