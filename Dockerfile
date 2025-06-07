@@ -9,8 +9,3 @@ ENV DB_PASSWORD=todopassword
 
 # Puerto expuesto (MySQL usa 3306 por defecto)
 EXPOSE 3306
-
-COPY healthcheck.py /healthcheck.py
-
-# Inicia MySQL y el health check en paralelo
-CMD sh -c "python3 /healthcheck.py & mysqld"
