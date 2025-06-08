@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true })); // Para formularios URL-encoded
 
 // Configuración CORS 
 app.use(cors({
-    origin: 'http://localhost:5173', // URL de tu frontend
+    origin: 'https://todo-list-rho-gilt.vercel.app', // URL de tu frontend
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Añade los métodos necesarios
     credentials: true // Para permitir cookies/tokens
 }));
