@@ -7,6 +7,13 @@ import taskRoutes from './src/routes/taskRoutes.js';
 import errorMiddleware from './src/middlewares/errorMiddleware.js';
 import bodyParser from 'body-parser';
 
+console.log('Configuración actual:', {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    user: process.env.DB_USER,
+    database: process.env.DB_NAME,
+    ssl: process.env.DB_SSL // Debería ser 'true'
+  });
 const app = express();
 
 // 1. Middlewares básicos (orden correcto)

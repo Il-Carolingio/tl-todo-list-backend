@@ -1,9 +1,18 @@
 import { Sequelize } from 'sequelize';
-import config from '../config/config.js';
+import sequelizeConfig from '../config/config.js';
 import mysql2 from 'mysql2';
 
+
+
 const env = process.env.NODE_ENV || 'development';
-const dbConfig = config[env];
+const dbConfig = sequelizeConfig[env];
+
+console.log('Configuración usada:', {
+  host: dbConfig.host,
+  port: dbConfig.port,
+  database: dbConfig.database,
+  ssl: dbConfig.dialectOptions?.ssl
+});
 
 const sequelize = new Sequelize(
   dbConfig.database,
@@ -11,10 +20,20 @@ const sequelize = new Sequelize(
   dbConfig.password,
   {
     host: dbConfig.host,
-    dialect: dbConfig.dialect || 'mysql',
+    port: dbConfig.port,
+    dialect:'mysql',
     dialectModule: mysql2,
+    dialectOptions: {
+      ssl:{
+        require:true,
+        rejectUnauthorized: false
+      }},
     logging: dbConfig.logging,
-    pool: dbConfig.pool
+    pool: {
+      max: 5,
+      min: 0,
+      acquire:60000,
+      idle:30000}
   }
 );
 // Verificación de conexión
@@ -40,6 +59,7 @@ if (User.associate) {
 if (Task.associate) {
   Task.associate({ User }); // Cada tarea pertenece a un usuario
 }
-  
+console.log('Configuración cargada:', sequelizeConfig);
+console.log('Entorno actual:', process.env.NODE_ENV);
   // Exportación consolidada
   export {sequelize, User, Task}
